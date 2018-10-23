@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>属性编辑</title>
+
+		<link rel="stylesheet" href="../layui/css/layui.css" />
+
+	</head>
+
+	<body>
+		<div style="width: 90%; margin: 0 auto;">
+			<form class="layui-form">
+				<div class="layui-form-item">
+					<label class="layui-form-label">文本信息：</label>
+					<div class="layui-input-block">
+						<input id="textId" type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入文本信息" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button id="confirmId" class="layui-btn">确认</button>
+						<button id="cancerId" class="layui-btn">取消</button>
+						<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</body>
+
+	<script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="../layui/layui.all.js"></script>
+	<script type="text/javascript" src="../util/StringUtils.js"></script>
+	<script type="text/javascript" src="../util/LayuiUtils.js"></script>
+	
+	<script>
+		var eleId;
+		$(function() {
+			eleId = parent.getEleId();
+			$('#textId').val(parent.getGraph().node(getRemovePrefixId(eleId)).text);
+		});
+		
+		$("#confirmId").click(function() {
+			//更新图对象
+			parent.getGraph().node(getRemovePrefixId(eleId)).text = $("#textId").val();
+			
+			//更新节点属性
+			var text = $("#textId").val();
+			if (text.length > 5) {
+				text = text.substring(0, 5) + '...';
+			}
+			parent.$(eleId).children(':first-child').text(text);
+			
+			//关闭弹窗
+			closeLayerFrame();
+		});
+		
+		//点击取消
+		$('#cancerId').click(function() {
+			//关闭弹窗
+			closeLayerFrame();
+		});
+	</script>
+	
+</html>

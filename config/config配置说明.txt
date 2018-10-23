@@ -1,0 +1,35 @@
+resizableFlag                   节点是否可以被缩放，默认为false
+smallMovePX                     微移幅度
+testPwd							打开测试窗口的校验密码
+                                
+selectedBoxShadow               被选中的节点阴影样式
+noSelectedBoxShadow             非选中的节点阴影样式
+dragOpacity                     可拖拽列表中克隆对象视觉效果的透明度
+                                
+connectionType                  连线类型
+connectionGap                   连线到端点的距离
+connectionCornerRadius          
+connectionAlwaysRespectStubs    
+connectionStub                  连线第一个转角距离
+isDetachable                    连线是否允许拖拽断开
+
+arrowWidth                      箭头宽度
+arrowLength                     箭头长度
+arrowLocation                   箭头位置
+
+endPointStrokeWidth             端点宽度
+endPointRadius                  端点圆角
+hoverEndPointStroke             端点鼠标悬浮样式
+
+defaultAnchors                  默认锚点
+sourceAnchors                   源节点锚点
+targetAnchors                   目标节点锚点
+sameAnchorsFlag                 目标节点是否采用与源节点同样的配置
+
+levelDistance                   水平间距
+verticalDistance                垂直间距
+alignDuration                   对齐动画持续时间
+
+keyboardParam中配置的是快捷键的key值
+
+msg中配置的是提示等相关的中文信息

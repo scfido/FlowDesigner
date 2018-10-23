@@ -1,0 +1,297 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="description" content="">
+		<meta name="HandheldFriendly" content="True">
+		<meta name="MobileOptimized" content="320">
+		<meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>联科流程设计器说明文档</title>
+		<link rel="alternate" type="application/rss+xml" title="egrappler.com" href="feed/index.html">
+		<link href="http://fonts.googleapis.com/css?family=Raleway:700,300" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/prettify.css">
+	</head>
+
+	<body>
+		<header>
+			<div class="container">
+				<h2 class="docs-header">联科流程设计器说明文档</h2>
+			</div>
+		</header>
+		<section>
+			<div class="container">
+				<ul class="docs-nav" id="menu-left">
+					<li><strong>入门</strong></li>
+					<li>
+						<a href="#welcome" class=" ">介绍</a>
+					</li>
+					<li>
+						<a href="#benefits" class=" ">包含的模块</a>
+					</li>
+					<li>
+						<a href="#features" class=" ">第一个流程绘制</a>
+					</li>
+					<li>
+						<a href="#license" class=" ">License</a>
+					</li>
+					<li class="separator"></li>
+					<li><strong>模块</strong></li>
+					<li>
+						<a href="#view_type" class=" ">面板</a>
+					</li>
+					<li>
+						<a href="#animation_style" class=" ">节点</a>
+					</li>
+					<li>
+						<a href="#bars_text" class=" ">端点</a>
+					</li>
+					<li>
+						<a href="#vote_counter" class=" ">锚点</a>
+					</li>
+					<li>
+						<a href="#rating_icons" class=" ">流程线</a>
+					</li>
+					<li>
+						<a href="#rating_titles" class=" ">覆盖物</a>
+					</li>
+					<li>
+						<a href="#bar_colors" class=" ">基本操作</a>
+					</li>
+					<li>
+						<a href="#setting" class=" ">设置</a>
+					</li>
+				</ul>
+				<div class="docs-content">
+					<h2>入门</h2>
+					<h3 id="welcome">介绍</h3>
+					<p>什么是流程设计器？</p>
+					<a href="javascript: void(0)" class="btn">概念</a>
+					<p>流程设计器（Process Designer）是一个图形化的设计工具，通过它可以实现流程的静态组合。用户可以 用图来表示流程，并为图的节点和边配置必须的属性，在图的节点上绑定相关的表单。</p>
+					<ul>
+						<li>See how many visitors like the new design of your website or logo</li>
+						<li>Analyze what your readers want to see on your blog</li>
+						<li>Understand how helpful the content on your support forum or website is</li>
+						<li>Know the latest trends and user’s opinion before launching a new product or service</li>
+					</ul>
+					<p> Opineo allows you to do all of this and much more without signing up for an account or hire an expert. This DIY tool enables you to listen to your customers’ voice easily and instantly. All you have to do is go online, design your widget and place it on your website. </p>
+					<h3 id="benefits">包含的模块</h3>
+					<ul>
+						<li>面板：主要是流程设计器的主面板的介绍，以及其中包含的组件功能</li>
+						<li>节点：流程图要素之一</li>
+						<li>端点：流程图要素之一</li>
+						<li>锚点：流程图要素之一</li>
+						<li>流程线：流程图要素之一</li>
+						<li>覆盖物：流程图要素之一</li>
+						<li>基本操作：介绍快速绘制流程的方法</li>
+					</ul>
+					<h3 id="features">第一个流程绘制</h3>
+					<ul>
+						<li>Facility to customize to match your website theme</li>
+						<li>Detailed and Compact view options</li>
+						<li>Comprehensive options to customize animation, colors, orientation and style</li>
+						<li>All the power and flexibility of jQuery</li>
+						<li>Easy install; 100% integration</li>
+						<li>Facility to customize rating icons</li>
+					</ul>
+					<h3 id="license"> License</h3>
+					<p> This Feedback Collection and Polling widget is free for personal and commercial projects as long as you are providing a link back to this page. If you don’t want to provide a link back, simply contribute to the development and improvement of this tool. To contribute to this and many other interesting projects, go to Support Efforts and become a patron.</p>
+					<hr>
+					<h2>模块</h2>
+					<p> Before you make any cusomization or even start using Opineo create a 'div' element and assign it some id. Now add references to necessary Javascrip files e.g.</p>
+					<ul>
+						<li>A reference to latest jQuery library </li>
+						<li>A reference to Opineo script file sudo nano opineo.js</li>
+					</ul>
+					<p> The following customization options are available in Opineo:</p>
+					<h3 id="view_type">面板</h3>
+					<ul>
+						<li>Detailed View</li>
+					</ul>
+
+					<pre class="prettyprint">&lt;script&gt;
+      	$(document).ready(function (){
+        $('#DefaultOptions').opineo('results.php', {curvalue:3,
+            view: 'detailed',
+            animation_speed: 'super',
+            show_total_votes_counter: false,
+            show_overall_rating: true});
+         })
+&lt;/script&gt;</pre>
+					<ul>
+						<li>Compact View</li>
+					</ul>
+					<pre class="prettyprint">&lt;script&gt;
+	$(document).ready(function (){
+	$('#CompactView').opineo('results.php',
+    	    {curvalue:3, view: 'compact',
+    	    animation_speed: 'super'});
+	})
+&lt;/script&gt;</pre>
+					<ul>
+						<li>Mini View</li>
+					</ul>
+					<pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#MiniView').opineo('results.php', {curvalue:0, view: 'mini', callback: myCallback});
+    })	
+&lt;/script&gt;</pre>
+					<h3 id="animation_style">节点</h3>
+					<ul>
+						<li>Slow</li>
+					</ul>
+					<pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'slow'});
+    })	
+&lt;/script&gt; </pre>
+					<ul>
+						<li>Medium</li>
+					</ul>
+					<pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'mild'});
+    })	
+&lt;/script&gt; </pre>
+					<ul>
+						<li>Fast</li>
+					</ul>
+					<pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'fast'});
+    })	
+ &lt;/script&gt;</pre>
+					<ul>
+						<li>Super Fast</li>
+					</ul>
+					<pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'super'});
+    })	
+&lt;/script&gt;</pre>
+					<ul>
+						<li>Ultra Fast</li>
+					</ul>
+					<pre class="prettyprint"> &lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', animation_speed:'ultra fast'});
+    })	
+&lt;/script&gt; </pre>
+					<h3 id="bars_text">端点</h3>
+					<ul>
+						<li>Show</li>
+					</ul>
+					<pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', votes_label:true});
+    })	
+&lt;/script&gt;</pre>
+					<ul>
+						<li>Hide</li>
+					</ul>
+					<pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', votes_label:false});
+    })	
+ &lt;/script&gt;</pre>
+					<h3 id="vote_counter">锚点</h3>
+					<ul>
+						<li>Show</li>
+					</ul>
+					<pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', show_votes_counter:true});
+    })	
+&lt;/script&gt; </pre>
+					<ul>
+						<li>Hide</li>
+					</ul>
+					<pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', votes_label:false});
+    })	
+&lt;/script&gt;</pre>
+					<h3 id="rating_icons">流程线</h3>
+					<ul>
+						<li>Colored</li>
+						<li>Grey</li>
+					</ul>
+					<h3 id="rating_titles">覆盖物</h3>
+					<ul>
+						<li>Text For First Star</li>
+					</ul>
+					<pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', star_1_text:'Hate It'});
+    })	
+&lt;/script&gt;</pre>
+					<ul>
+						<li>Text For Second Star</li>
+					</ul>
+					<pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', star_2_text:'Don't Like It'});
+    })	
+&lt;/script&gt; </pre>
+					<ul>
+						<li>Text For Third Star</li>
+					</ul>
+					<pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', star_1_text:'Its OK'});
+    })	
+&lt;/script&gt;</pre>
+					<ul>
+						<li>Text For Fourth Star</li>
+					</ul>
+					<pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', star_1_text:'Like It'});
+    })	
+&lt;/script&gt;</pre>
+					<ul>
+						<li>Text For Fifth Star</li>
+					</ul>
+					<pre class="prettyprint">&lt;script&gt;
+    $(document).ready(function (){
+    $('#opineo').opineo('results.php', {curvalue:0, view: 'mini', star_1_text:'Love It'});
+    })	
+&lt;/script&gt;</pre>
+					<h3 id="bar_colors">基本操作</h3>
+					<ul>
+						<li>Colors of Red Bar</li>
+						<li>Colors of Yellow Bar</li>
+						<li>Colors of Green Bar</li>
+					</ul>
+					<h3 id="setting">设置</h3>
+					<ul>
+						<li>Colors of Red Bar</li>
+						<li>Colors of Yellow Bar</li>
+						<li>Colors of Green Bar</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+		<section class="vibrant centered">
+			<div class="container">
+				<h4>联科流程设计器说明文档</h4>
+			</div>
+		</section>
+		<footer>
+			<div class="container">
+				<p>
+					&copy; 2018 Linkey 流程服务专家
+				</p>
+			</div>
+		</footer>
+		
+		<script src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/prettify/prettify.js"></script>
+		<script src="js/layout.js"></script>
+		<script src="js/jquery.localscroll-1.2.7.js" type="text/javascript"></script>
+		<script src="js/jquery.scrollTo-1.4.3.1.js" type="text/javascript"></script>
+
+	</body>
+
+</html>

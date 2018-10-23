@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>设置节点样式</title>
+
+		<link rel="stylesheet" href="../layui/css/layui.css" />
+		<link rel="stylesheet" href="../css/jquery.minicolors.css" />
+
+	</head>
+
+	<body>
+		<div style="width: 90%; margin: 0 auto;">
+			<form class="layui-form">
+				<div class="layui-form-item">
+					<label class="layui-form-label">颜色：</label>
+					<div class="layui-input-block">
+						<input id="colorId" type="text" name="color" class="layui-input" style="height: 32px;">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button id="confirmId" class="layui-btn">确认</button>
+						<button id="cancerId" class="layui-btn">取消</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</body>
+
+	<script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="../layui/layui.all.js"></script>
+	<script type="text/javascript" src="../js/jquery.minicolors.min.js"></script>
+	<script type="text/javascript" src="../util/StringUtils.js"></script>
+
+	<script>
+		var eleId;
+		$(function() {
+			//获取当前节点的id
+			eleId = parent.getEleId();
+			
+			//初始化设置数据
+			$('#colorId').val(parent.$(eleId).attr('bgColor-gradient'));
+			
+			//颜色选取器
+			$("#colorId").minicolors({
+				control: $(this).attr('data-control') || 'hue',
+				defaultValue: $(this).attr('data-defaultValue') || '',
+				inline: $(this).attr('data-inline') === 'true',
+				letterCase: $(this).attr('data-letterCase') || 'lowercase',
+				opacity: $(this).attr('data-opacity'),
+				position: $(this).attr('data-position') || 'bottom left',
+				change: function(hex, opacity) {
+					var log;
+					try {
+						log = hex ? hex : 'transparent';
+						if(opacity) log += ', ' + opacity;
+						//打印选中的颜色
+						//console.log(changeHexColorToRgba(log));
+						//实时变化颜色
+						parent.$(eleId).css('background', getNodeBgFromHexColor($('#colorId').val()));
+					} catch(e) {}
+				},
+				theme: 'default'
+			});
+		});
+		
+		//点击确定按钮保存设置，关闭窗口
+		$("#confirmId").click(function() {
+			//修改节点的背景渐变色
+			parent.$(eleId).css('background', getNodeBgFromHexColor($('#colorId').val()));
+			//将最新的十六进制颜色保存一份到 bgColor-gradient 属性中
+			parent.$(eleId).attr('bgColor-gradient', $('#colorId').val());
+			
+			//获取窗口索引
+			var index = parent.layer.getFrameIndex(window.name);
+			//关闭弹出的子页面窗口
+			parent.layer.close(index);
+		});
+		
+		//点击取消
+		$('#cancerId').click(function() {
+			//从保存的bgColor-gradient属性中还原节点的背景色
+			parent.$(eleId).css('background', getNodeBgFromHexColor(parent.$(eleId).attr('bgColor-gradient')));
+			
+			//获取窗口索引
+			var index = parent.layer.getFrameIndex(window.name);
+			//关闭弹出的子页面窗口
+			parent.layer.close(index);
+		});
+	</script>
+
+</html>

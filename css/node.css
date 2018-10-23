@@ -1,0 +1,438 @@
+/**
+ * 使文本在鼠标拖动时不被选中
+ */
+p, span, pre, img {
+	-webkit-user-select:none; 
+	-moz-user-select:none; 
+	-ms-user-select:none;
+	user-select:none;
+}
+
+/**
+ * 开始节点
+ */
+.startNode {
+	background-color: rgb(120, 220, 107);
+	/* 边框 */
+	border: 2px solid #40AFFE;
+	/* 圆角 */
+	border-radius: 50%;
+	/* 泛光 */
+	/*box-shadow: 0 0 15px #4E4E4E;*/
+	/* 高度 */
+	height: 30px;
+	/* 宽度 */
+	width: 30px;
+	/* 定位 */
+	position: absolute;
+	/* 鼠标样式 */
+	cursor: move;
+	/* 文字水平居中 */
+	text-align: center;
+	/* 文字垂直居中，与div的高度要保持一致 */
+	line-height: 30px;
+	/* 设置字间距 */
+	/*letter-spacing: 2px;*/
+	/* 背景渐变 */
+	background: linear-gradient(to right, rgb(120, 220, 107, 0.9), rgb(120, 220, 107, 0.8), rgb(120, 220, 107, 0.9));
+	background: -ms-linear-gradient(rgba(120, 220, 107, 0.9), rgba(120, 220, 107, 0.9));
+	/* 层叠顺序 */
+	z-index: 26;
+}
+
+/**
+ * 结束节点
+ */
+.endNode {
+	background-color: rgb(220, 107, 107);
+	/* 边框 */
+	border: 2px solid #40AFFE;
+	/* 圆角 */
+	border-radius: 50%;
+	/* 泛光 */
+	/*box-shadow: 0 0 15px #4E4E4E;*/
+	/* 高度 */
+	height: 30px;
+	/* 宽度 */
+	width: 30px;
+	/* 定位 */
+	position: absolute;
+	/* 鼠标样式 */
+	cursor: move;
+	/* 文字水平居中 */
+	text-align: center;
+	/* 文字垂直居中，与div的高度要保持一致 */
+	line-height: 30px;
+	/* 设置字间距 */
+	/*letter-spacing: 2px;*/
+	/* 背景渐变 */
+	background: linear-gradient(to right, rgb(220, 107, 107, 0.9), rgb(220, 107, 107, 0.8), rgb(220, 107, 107, 0.9));
+	background: -ms-linear-gradient(rgba(220, 107, 107, 0.9), rgba(220, 107, 107, 0.9));
+	/* 层叠顺序 */
+	z-index: 26;
+}
+
+/**
+ * 人工活动
+ */
+.commNode {
+	background-color: rgb(107, 171, 220);
+	/* 边框 */
+	border: 2px solid #40AFFE;
+	/* 圆角 */
+	border-radius: 10px;
+	/* 泛光 */
+	/*box-shadow: 0 0 15px #4E4E4E;*/
+	/* 高度 */
+	height: 30px;
+	/* 宽度 */
+	width: 70px;
+	/* 定位 */
+	position: absolute;
+	/* 鼠标样式 */
+	cursor: move;
+	/* 文字水平居中 */
+	text-align: center;
+	/* 文字垂直居中，与div的高度要保持一致 */
+	line-height: 40px;
+	/* 设置字间距 */
+	/*letter-spacing: 2px;*/
+	/* 背景渐变 */
+	background: linear-gradient(to right, rgb(107, 171, 220, 0.9), rgb(107, 171, 220, 0.8), rgb(107, 171, 220, 0.9));
+	background: -ms-linear-gradient(rgba(107, 171, 220, 0.9), rgba(107, 171, 220, 0.9));
+	/* 层叠顺序 */
+	z-index: 26;
+}
+
+/**
+ * 自由活动
+ */
+.freedomNode {
+	background-color: rgb(107, 171, 220);
+	/* 边框 */
+	border: 2px solid #40AFFE;
+	/* 圆角 */
+	border-radius: 10px;
+	/* 泛光 */
+	/*box-shadow: 0 0 15px #4E4E4E;*/
+	/* 高度 */
+	height: 30px;
+	/* 宽度 */
+	width: 70px;
+	/* 定位 */
+	position: absolute;
+	/* 鼠标样式 */
+	cursor: move;
+	/* 文字水平居中 */
+	text-align: center;
+	/* 文字垂直居中，与div的高度要保持一致 */
+	line-height: 40px;
+	/* 设置字间距 */
+	/*letter-spacing: 2px;*/
+	/* 背景渐变 */
+	background: linear-gradient(to right, rgb(107, 171, 220, 0.9), rgb(107, 171, 220, 0.8), rgb(107, 171, 220, 0.9));
+	background: -ms-linear-gradient(rgba(107, 171, 220, 0.9), rgba(107, 171, 220, 0.9));
+	/* 层叠顺序 */
+	z-index: 26;
+}
+
+/**
+ * 网关节点
+ */
+.gateWayNode {
+    background-color: rgb(107, 171, 220);
+    /* 边框 */
+	border: 2px solid #40AFFE;
+	/* 泛光 */
+	/*box-shadow: 0 0 15px #4E4E4E;*/
+	/* 高度 */
+    height: 25px;
+    /* 宽度 */
+    width: 25px;
+    /* 定位 */
+	position: absolute;
+	/* 鼠标样式 */
+	cursor: move;
+	/* 文字水平居中 */
+	text-align: center;
+	/* 文字垂直居中，与div的高度要保持一致 */
+	line-height: 30px;
+	/* 设置字间距 */
+	letter-spacing: 1px;
+    /* 背景渐变 */
+	background: linear-gradient(to right, rgb(107, 171, 220, 0.9), rgb(107, 171, 220, 0.8), rgb(107, 171, 220, 0.9));
+	background: -ms-linear-gradient(rgba(107, 171, 220, 0.9), rgba(107, 171, 220, 0.9));
+	/* 层叠顺序 */
+	z-index: 26;
+    
+	/* Rotate */
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+	/* Rotate Origin */
+    -webkit-transform-origin: 0 100%;
+    -moz-transform-origin: 0 100%;
+    -ms-transform-origin: 0 100%;
+    -o-transform-origin: 0 100%;
+    transform-origin: 0 100%;
+}
+
+/**
+ * 网关节点内部字体不倾斜
+ */
+.gateWayNode span{
+    display: inline-block;
+    transform: rotate(45deg);
+}
+
+/**
+ * 内部子流程
+ */
+.innerChildFlowNode {
+	background-color: rgb(237, 239, 49);
+	/* 边框 */
+	border: 2px solid #40AFFE;
+	/* 圆角 */
+	border-radius: 10px;
+	/* 泛光 */
+	/*box-shadow: 0 0 15px #4E4E4E;*/
+	/* 高度 */
+	height: 30px;
+	/* 宽度 */
+	width: 70px;
+	/* 定位 */
+	position: absolute;
+	/* 鼠标样式 */
+	cursor: move;
+	/* 文字水平居中 */
+	text-align: center;
+	/* 文字垂直居中，与div的高度要保持一致 */
+	line-height: 40px;
+	/* 设置字间距 */
+	/*letter-spacing: 2px;*/
+	/* 背景渐变 */
+	background: linear-gradient(to right, rgb(237, 239, 49, 0.9), rgb(237, 239, 49, 0.8), rgb(237, 239, 49, 0.9));
+	background: -ms-linear-gradient(rgba(237, 239, 49, 0.9), rgba(237, 239, 49, 0.9));
+	/* 层叠顺序 */
+	z-index: 26;
+}
+
+/**
+ * 外部子流程
+ */
+.outerChildFlowNode {
+	background-color: rgb(237, 239, 49);
+	/* 边框 */
+	border: 2px solid #40AFFE;
+	/* 圆角 */
+	border-radius: 10px;
+	/* 泛光 */
+	/*box-shadow: 0 0 15px #4E4E4E;*/
+	/* 高度 */
+	height: 30px;
+	/* 宽度 */
+	width: 70px;
+	/* 定位 */
+	position: absolute;
+	/* 鼠标样式 */
+	cursor: move;
+	/* 文字水平居中 */
+	text-align: center;
+	/* 文字垂直居中，与div的高度要保持一致 */
+	line-height: 40px;
+	/* 设置字间距 */
+	/*letter-spacing: 2px;*/
+	/* 背景渐变 */
+	background: linear-gradient(to right, rgb(237, 239, 49, 0.9), rgb(237, 239, 49, 0.8), rgb(237, 239, 49, 0.9));
+	background: -ms-linear-gradient(rgba(237, 239, 49, 0.9), rgba(237, 239, 49, 0.9));
+	/* 层叠顺序 */
+	z-index: 26;
+}
+
+/**
+ * 横向泳道
+ */
+.broadwiseLaneNode {
+	background-color: rgb(237, 239, 49);
+	/* 边框 */
+	border: 2px solid #40AFFE;
+	/* 圆角 */
+	border-radius: 5px;
+	/* 泛光 */
+	/*box-shadow: 0 0 15px #4E4E4E;*/
+	/* 高度 */
+	height: 40px;
+	/* 宽度 */
+	width: 80px;
+	/* 定位 */
+	position: absolute;
+	/* 鼠标样式 */
+	cursor: move;
+	/* 文字水平居中 */
+	text-align: center;
+	/* 文字垂直居中，与div的高度要保持一致 */
+	line-height: 40px;
+	/* 设置字间距 */
+	/*letter-spacing: 2px;*/
+	/* 背景渐变 */
+	background: linear-gradient(to right, rgb(237, 239, 49, 0.9), rgb(237, 239, 49, 0.8), rgb(237, 239, 49, 0.9));
+	background: -ms-linear-gradient(rgba(237, 239, 49, 0.9), rgba(237, 239, 49, 0.9));
+}
+
+/**
+ * 在容器中的横向泳道
+ */
+.broadwiseLaneNodeOnContainer {
+	/* 边框 */
+	border: 2px solid #000000;
+	/* 圆角 */
+	border-radius: 5px;
+	/* 泛光 */
+	box-shadow: 0 0 15px #4E4E4E;
+	/* 高度 */
+	height: 250px;
+	/* 宽度 */
+	width: 1200px;
+	/* 定位 */
+	position: absolute;
+	/* 文字垂直居中，与div的高度要保持一致 */
+	line-height: 60px;
+	/* 设置字间距 */
+	letter-spacing: 2px;
+	/* 层叠顺序 */
+	z-index: 1;
+}
+
+/**
+ * 纵向泳道
+ */
+.directionLaneNode {
+	background-color: rgb(237, 239, 49);
+	/* 边框 */
+	border: 2px solid #40AFFE;
+	/* 圆角 */
+	border-radius: 5px;
+	/* 泛光 */
+	/*box-shadow: 0 0 15px #4E4E4E;*/
+	/* 高度 */
+	height: 40px;
+	/* 宽度 */
+	width: 80px;
+	/* 定位 */
+	position: absolute;
+	/* 鼠标样式 */
+	cursor: move;
+	/* 文字水平居中 */
+	text-align: center;
+	/* 文字垂直居中，与div的高度要保持一致 */
+	line-height: 40px;
+	/* 设置字间距 */
+	/*letter-spacing: 2px;*/
+	/* 背景渐变 */
+	background: linear-gradient(to right, rgb(237, 239, 49, 0.9), rgb(237, 239, 49, 0.8), rgb(237, 239, 49, 0.9));
+	background: -ms-linear-gradient(rgba(237, 239, 49, 0.9), rgba(237, 239, 49, 0.9));
+}
+
+/**
+ * 在容器中的纵向泳道
+ */
+.directionLaneNodeOnContainer {
+	/* 边框 */
+	border: 2px solid #000000;
+	/* 圆角 */
+	border-radius: 5px;
+	/* 泛光 */
+	box-shadow: 0 0 15px #4E4E4E;
+	/* 高度 */
+	height: 750px;
+	/* 宽度 */
+	width: 300px;
+	/* 定位 */
+	position: absolute;
+	/* 文字水平居中 */
+	text-align: center;
+	/* 文字垂直居中，与div的高度要保持一致 */
+	line-height: 50px;
+	/* 设置字间距 */
+	letter-spacing: 2px;
+	/* 层叠顺序 */
+	z-index: 1;
+}
+
+/**
+ * 泳道文本div块样式
+ */
+.laneLabelDivClass {
+	background-color: rgb(252, 235, 0);
+	/* 边框 */
+	border: 2px solid black;
+	/* 文字水平居中 */
+	text-align: center;
+	/* 鼠标样式 */
+	cursor: move;
+	/* 背景渐变 */
+	background: linear-gradient(to right, rgb(252, 235, 0, 0.9), rgb(252, 235, 0, 0.8), rgb(252, 235, 0, 0.9));
+	background: -ms-linear-gradient(rgba(252, 235, 0, 0.9), rgba(252, 235, 0, 0.9));
+}
+
+/**
+ * 事件
+ */
+.eventNode {
+	background-color: rgb(107, 171, 220);
+	/* 边框 */
+	border: 2px solid #40AFFE;
+	/* 圆角 */
+	border-radius: 50%;
+	/* 泛光 */
+	/*box-shadow: 0 0 15px #4E4E4E;*/
+	/* 高度 */
+	height: 30px;
+	/* 宽度 */
+	width: 30px;
+	/* 定位 */
+	position: absolute;
+	/* 鼠标样式 */
+	cursor: move;
+	/* 文字水平居中 */
+	text-align: center;
+	/* 文字垂直居中，与div的高度要保持一致 */
+	line-height: 40px;
+	/* 设置字间距 */
+	letter-spacing: 2px;
+	/* 背景渐变 */
+	background: linear-gradient(to right, rgb(107, 171, 220, 0.9), rgb(107, 171, 220, 0.8), rgb(107, 171, 220, 0.9));
+	background: -ms-linear-gradient(rgba(107, 171, 220, 0.9), rgba(107, 171, 220, 0.9));
+	/* 层叠顺序 */
+	z-index: 26;
+}
+
+/**
+ * 连接线动画样式
+ */
+.connectionAnimateClass {
+	display: none;
+}
+
+/**
+ * overlay label样式
+ */
+.labelClass {
+	background-color: white;
+	padding: 5px;
+	opacity: 0.7;
+	border: 1px solid #346789;
+	border-radius: 10px;
+	cursor: pointer;
+	
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select:none;
+	user-select:none;
+}
+
+.jtk-connector { z-index: 25; }
+.jtk-endpoint { z-index: 27; }
+.jtk-overlay { z-index: 30; }

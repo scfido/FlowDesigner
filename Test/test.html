@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>属性编辑</title>
+	</head>
+	
+	<body>
+		<textarea id="textareaId" cols="100", rows="10">没有点击保存流程按钮</textarea><br />
+		<button id="loadBtn">load</button>
+		<button id="closeBtn">close</button>
+	</body>
+	
+	<script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
+	<script>
+		$(function() {
+			var flowDoc = parent.getFlowDoc();
+			$("#textareaId").val(JSON.stringify(flowDoc));
+		})
+		
+		$("#closeBtn").click(function() {
+			//获取窗口索引
+		    var index = parent.layer.getFrameIndex(window.name);
+		    //关闭弹出的子页面窗口
+		    parent.layer.close(index);
+		});
+		
+		$("#loadBtn").click(function() {
+			parent.initFlowCharts(JSON.parse($("#textareaId").val()));
+			//获取窗口索引
+		    var index = parent.layer.getFrameIndex(window.name);
+		    //关闭弹出的子页面窗口
+		    parent.layer.close(index);
+		});
+	</script>
+	
+</html>

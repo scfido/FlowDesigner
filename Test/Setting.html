@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>设置</title>
+
+		<link rel="stylesheet" href="../layui/css/layui.css" />
+
+	</head>
+
+	<body>
+		<div style="width: 90%; margin: 0 auto;">
+			<table class="layui-table" style="text-align: center;">
+				<tr>
+					<td>
+						微移幅度：
+					</td>
+					<td>
+						<input id="movePXId" type="range" min="1" max="10" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						水平间距：
+					</td>
+					<td>
+						<input id="levelDistanceId" type="number" min="30" max="300" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						垂直间距：
+					</td>
+					<td>
+						<input id="verticalDistanceId" type="number" min="30" max="300" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						连线样式：
+					</td>
+					<td>
+						<select id="connectionTypeId">
+							<option value="Straight">直线</option>
+							<option value="Bezier">曲线</option>
+							<option value="Flowchart">流程线</option>
+							<option value="StateMachine">状态线</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						锚点位置(Source)：
+					</td>
+					<td id="sourceAnchorsId">
+						<input id="BottomSource" type="checkbox" name="Bottom" title="下边" /> 下边
+						<input id="RightSource" type="checkbox" name="Right" title="右边" /> 右边
+						<input id="TopSource" type="checkbox" name="Top" title="上边" /> 上边
+						<input id="LeftSource" type="checkbox" name="Left" title="左边" /> 左边
+						<br />
+						<input id="TopRightSource" type="checkbox" name="TopRight" title="右上" /> 右上
+						<input id="BottomRightSource" type="checkbox" name="BottomRight" title="右下" /> 右下
+						<input id="BottomLeftSource" type="checkbox" name="BottomLeft" title="左下" /> 左下
+						<input id="TopLeftSource" type="checkbox" name="TopLeft" title="左上" /> 左上
+					</td>
+				</tr>
+				<tr>
+					<td>
+						&nbsp;&nbsp;锚点位置(Target)：
+						<br />
+						<input id="sameWithSource" type="checkbox" onclick="sameWithSourceClick()" /> 和Source一致
+					</td>
+					<td id="targetAnchorsId">
+						<input id="BottomTarget" type="checkbox" name="Bottom" title="下边" /> 下边
+						<input id="RightTarget" type="checkbox" name="Right" title="右边" /> 右边
+						<input id="TopTarget" type="checkbox" name="Top" title="上边" /> 上边
+						<input id="LeftTarget" type="checkbox" name="Left" title="左边" /> 左边
+						<br />
+						<input id="TopRightTarget" type="checkbox" name="TopRight" title="右上" /> 右上
+						<input id="BottomRightTarget" type="checkbox" name="BottomRight" title="右下" /> 右下
+						<input id="BottomLeftTarget" type="checkbox" name="BottomLeft" title="左下" /> 左下
+						<input id="TopLeftTarget" type="checkbox" name="TopLeft" title="左上" /> 左上
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<button id="confirmId" class="layui-btn">确认</button>
+					</td>
+					<td>
+						<button id="cancerId" class="layui-btn layui-btn-primary">取消</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</body>
+
+	<script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="../layui/layui.all.js"></script>
+	<script type="text/javascript" src="../util/StringUtils.js"></script>
+	<script type="text/javascript" src="../util/LayuiUtils.js"></script>
+	
+	<script>
+		var config;
+		var allAnchors = ["Bottom", "Right", "Top", "Left", "TopRight", "BottomRight", "BottomLeft", "TopLeft"];
+		$(function() {
+			config = parent.getConfig();
+			//初始化数据
+			$('#movePXId').val(config.defaultConfig.smallMovePX);
+			$('#levelDistanceId').val(config.alignParam.levelDistance);
+			$('#verticalDistanceId').val(config.alignParam.verticalDistance);
+			$('#connectionTypeId').val(config.conn.connectionType);
+			
+			var sourceAnchors = config.anchors.sourceAnchors;
+			var targetAnchors = config.anchors.targetAnchors;
+			var sameAnchorsFlag = config.anchors.sameAnchorsFlag;
+			if (sameAnchorsFlag) {
+				$('#sameWithSource').prop('checked', 'checked');
+			} else {
+				$('#sameWithSource').prop('checked', '');
+			}
+			if (sourceAnchors.length == 0 || targetAnchors.length == 0) {
+				checkBoxCheckedByArray(config.anchors.defaultAnchors, 'Source');
+				sameWithSourceClick();
+			} else {
+				checkBoxCheckedByArray(sourceAnchors, 'Source');
+				checkBoxCheckedByArray(targetAnchors, 'Target');
+				sameWithSourceClick();
+			}
+		});
+		
+		function sameWithSourceClick() {
+			if ($('#sameWithSource').prop('checked')) {
+				var sourceArr = getSourceArray();
+				allNoCheckd();
+				checkBoxCheckedByArray(sourceArr, 'Target');
+				disabledCheckBoxByArray(true);
+			} else {
+				disabledCheckBoxByArray(false);
+			}
+		}
+		
+		function getSourceArray() {
+			var res = [];
+			$.each($('#sourceAnchorsId').children('input'), function() {
+				if ($(this).prop('checked')) {
+					res.push($(this).attr('name'));
+				}
+			});
+			return res;
+		}
+		
+		function getTargetArray() {
+			var res = [];
+			$.each($('#targetAnchorsId').children('input'), function() {
+				if ($(this).prop('checked')) {
+					res.push($(this).attr('name'));
+				}
+			});
+			return res;
+		}
+		
+		function checkBoxCheckedByArray(arr, suffix) {
+			var i;
+			for (i = 0; i < arr.length; i++) {
+				$('#' + arr[i] + suffix).prop('checked', 'checked');
+			}
+		}
+		
+		function allNoCheckd() {
+			var i;
+			for (i = 0; i < allAnchors.length; i++) {
+				$('#' + allAnchors[i] + 'Target').prop('checked', '');
+			}
+		}
+		
+		function disabledCheckBoxByArray(flag) {
+			var i;
+			if (flag) {
+				for (i = 0; i < allAnchors.length; i++) {
+					$('#' + allAnchors[i] + 'Target').attr('disabled', 'disabled');
+				}
+			} else {
+				for (i = 0; i < allAnchors.length; i++) {
+					$('#' + allAnchors[i] + 'Target').removeAttr('disabled');
+				}
+			}
+		}
+		
+		$("#confirmId").click(function() {
+			//更新配置
+			var levelDistance = parseInt($('#levelDistanceId').val());
+			var verticalDistance = parseInt($('#verticalDistanceId').val());
+			if (levelDistance < 30) {
+				levelDistance = 30;
+			} else if (levelDistance > 300) {
+				levelDistance = 300;
+			}
+			if (verticalDistance < 30) {
+				verticalDistance = 30;
+			} else if (verticalDistance > 300) {
+				verticalDistance = 300;
+			}
+			
+			var sourceArr =  getSourceArray();
+			var targetArr = getTargetArray();
+			if (sourceArr.length <= 0 || targetArr <= 0) {
+				layer.msg('Source锚点和Target锚点都至少选择一个');
+				return;
+			}
+			config.anchors.sourceAnchors = sourceArr;
+			config.anchors.targetAnchors = targetArr;
+			config.anchors.sameAnchorsFlag = $('#sameWithSource').prop('checked');
+			
+			config.defaultConfig.smallMovePX = parseInt($('#movePXId').val());
+			config.alignParam.levelDistance = levelDistance;
+			config.alignParam.verticalDistance = verticalDistance;
+			config.conn.connectionType = $('#connectionTypeId').val();
+			
+			//关闭弹窗
+			closeLayerFrame();
+		});
+		
+		//点击取消
+		$('#cancerId').click(function() {
+			//关闭弹窗
+			closeLayerFrame();
+		});
+	</script>
+	
+</html>

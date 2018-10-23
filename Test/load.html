@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>加载中页面</title>
+
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="../layui/css/layui.css" />
+
+		<style>
+			div {
+				position: absolute;
+			}
+		</style>
+	</head>
+
+	<body style="background: url(../images/loadbg.jpg) no-repeat; background-size: 100% 100%; background-attachment: fixed;">
+		<div id="divId">
+			<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+			<span>Loading...</span>
+		</div>
+		<div id="jindu" class="layui-progress layui-progress-big layui-footer" lay-filter="jindu" lay-showPercent="true">
+			<div id="showjindu" class="layui-progress-bar layui-bg-blue" lay-percent="0%"></div>
+		</div>
+	</body>
+
+	<script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="../layui/layui.all.js"></script>
+
+	<script>
+		$(function() {
+			$('#divId').css('top', window.innerHeight / 2 - 50);
+			$('#divId').css('left', window.innerWidth / 2 - 50);
+			$("#jindu").css('top', window.innerHeight - 50);
+		});
+		
+		layui.use('element', function() {
+			var element = layui.element;
+			
+			var n = 0, timer = setInterval(function() {
+				n = n + 10;
+				if (n > 100) {
+					n = 100;
+					clearInterval(timer);
+				}
+				element.progress('jindu', n + '%');
+			}, 50);
+		});
+	</script>
+
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>联科BPM流程绘制</title>
+		
+		<link rel="stylesheet" href="../css/node.css" />
+		<link rel="stylesheet" href="../layui/css/layui.css" />
+		<link href="../plugings/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<link href="../plugings/jquery-ui-1.12.1.custom/jquery-ui.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="../css/index.css" />
+		<link rel="stylesheet" href="../css/web.contextmenu.css" />
+
+		<style>
+			#Container {
+				height: 2000px;
+				width: 3000px;
+			}
+			
+			.canvasClass {
+				height: 845px;
+				/* 边框 */
+				border: 1px solid gray;
+				/* 网格背景图 */
+				background-image: url(../images/grid.jpeg);
+				/* 铺满 */
+				background-repeat: repeat;
+				/* 设置画布可滚动 */
+				overflow: scroll;
+				/* 设置层叠等级 */
+				z-index: -1;
+			}
+			
+			.iconClass {
+				color: white;
+			}
+			
+			.nodeSpan {
+				color: #575765;
+				font-size: 15px;
+			}
+			
+			.fa-2x {
+				font-size: 1.5em;
+			}
+		</style>
+
+	</head>
+
+	<body class="layui-layout-body" style="background-color: #eeeeee;">
+
+		<div class="layui-layout layui-layout-admin">
+			<div class="layui-header" style="background-color: #36507c;">
+				<!-- logo -->
+				<div class="layui-logo" style="width: 380px; text-align: left; left: 50px;">
+					<img src="../images/logo.png" style="margin-right: 20px;" />
+					<span class="iconClass" style="font-size: 20px; padding-left: 10px; font-weight: bolder; border-left: 1px #cecece solid;">联 科 BPM 流 程 绘 制</span>
+				</div>
+				<!-- 右侧头部区域 -->
+				<ul class="layui-nav layui-layout-right">
+					<li class="layui-nav-item">
+						<a href="javascript: save();">
+							<i class="fa fa-check fa-2x iconClass showItemTxt" aria-hidden="true" type="3"><span id="saveStatus" class="layui-badge-dot" style="display: none;"></span></i>
+							<span hidden="hidden">保存流程</span>
+						</a>
+					</li>
+					<li class="layui-nav-item">
+						<a href="javascript: save2Photo();" download="myFlow">
+							<i class="fa fa-file-image-o fa-2x iconClass showItemTxt" aria-hidden="true" type="3"></i>
+							<span hidden="hidden">保存为图片</span>
+						</a>
+					</li>
+					<li class="layui-nav-item">
+						<a href="javascript: undo();">
+							<i class="fa fa-reply fa-2x iconClass showItemTxt" aria-hidden="true" type="3"></i>
+							<span hidden="hidden">撤销</span>
+						</a>
+					</li>
+					<li class="layui-nav-item">
+						<a href="javascript: redo();">
+							<i class="fa fa-share fa-2x iconClass showItemTxt" aria-hidden="true" type="3"></i>
+							<span hidden="hidden">重做</span>
+						</a>
+					</li>
+					<li class="layui-nav-item">
+						<a href="javascript: clear();">
+							<i class="fa fa-refresh fa-2x fa-fw iconClass showItemTxt" aria-hidden="true" type="3"></i>
+							<span hidden="hidden">重新绘制</span>
+						</a>
+					</li>
+					<li class="layui-nav-item">
+						<a id="showGridId" href="javascript: showGrid();">
+							<i class="fa fa-eye fa-2x iconClass showItemTxt" aria-hidden="true" type="3"></i>
+							<span hidden="hidden">隐藏网格</span>
+						</a>
+					</li>
+					<li class="layui-nav-item">
+						<a href="javascript: setting();">
+							<i class="fa fa-cog fa-2x fa-fw iconClass showItemTxt" aria-hidden="true" type="3"></i>
+							<span hidden="hidden">设置</span>
+						</a>
+					</li>
+					<li class="layui-nav-item">
+						<a href="javascript: void(0);">
+							<i class="fa fa-question-circle fa-2x iconClass" aria-hidden="true"></i>
+							<span hidden="hidden">帮助</span>
+						</a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a href="javascript: helpDoc();"><p>帮助文档</p></a>
+							</dd>
+							<dd>
+								<a href="javascript: shortcutKey();"><p>快捷键大全</p></a>
+							</dd>
+						</dl>
+					</li>
+					<li class="layui-nav-item">
+						<a href="javascript: closeFrame();">
+							<i class="fa fa-sign-out fa-2x showItemTxt iconClass" aria-hidden="true" type="3"></i>
+							<span hidden="hidden">退出</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			
+			<hr style="margin-top: 0; margin-bottom: 0; background-color: #979797;" />
+			
+			<div id="toolsModelId" style="width: 250px; height: 850px; position: absolute; background-color: #eeeeee;">
+				<div>
+					<!-- 左侧导航区域 -->
+					<dl class="list_dl" style="z-index: 1; position: absolute; border: 1px #d3d3d3 solid;">
+						<dt class="list_dt">
+				            <span class="_after"></span>
+				            <p>工具</p>
+				            <i class="list_dt_icon"></i>
+        				</dt>
+						<dd class="list_dd">
+							<ul>
+								<li class="list_li">
+									<div id="unableDraggableDiv" align="center" style="padding: 3px;">
+										<i id="mouseToolsBtn" class="fa fa-mouse-pointer fa-2x showItemTxt" aria-hidden="true" type="2"></i>
+										&nbsp;&nbsp;&nbsp;&nbsp;
+										<span class="nodeSpan">鼠标工具</span>
+									</div>
+								</li>
+								<li class="list_li">
+									<div id="enableDraggableDiv" align="center" style="padding: 3px;">
+										<i id="connectionToolsBtn" class="fa fa-exchange fa-2x showItemTxt" aria-hidden="true" type="2"></i>
+										&nbsp;&nbsp;
+										<span class="nodeSpan">连线工具</span>
+									</div>
+								</li>
+							</ul>
+						</dd>
+						<dt class="list_dt">
+				            <span class="_after"></span>
+				            <p>节点</p>
+				            <i class="list_dt_icon"></i>
+        				</dt>
+						<dd class="list_dd">
+							<ul>
+								<li class="list_li controler" style="cursor: move;">
+									<div id="start" href="javascript: void(0);" class="startNode" style="margin-left: 30px; margin-top: 8px; position: static; float: left;">
+									</div>
+									<pre style="float: left;">    </pre>
+									<span class="nodeSpan">开始</span>
+								</li>
+								<li class="list_li controler" style="cursor: move;">
+									<div id="end" href="javascript: void(0);" class="endNode" style="margin-left: 30px; margin-top: 8px;">
+									</div>
+									<span class="nodeSpan">结束</span>
+								</li>
+								<li class="list_li controler" style="cursor: move;">
+									<div id="gateWay" href="javascript: void(0);" class="gateWayNode" style="margin-top: 17px; margin-left: 47px; position: static; float: left;">
+									</div>
+									<pre style="float: left;"> </pre>
+									<span class="nodeSpan">网关</span>
+								</li>
+								<li class="list_li controler" style="cursor: move;">
+									<div id="event" href="javascript: void(0);" class="eventNode" style="margin-left: 30px; margin-top: 8px;">
+									</div>
+									<span class="nodeSpan">事件</span>
+								</li>
+								<li class="list_li controler" style="cursor: move;">
+									<div id="comm" href="javascript: void(0);" class="commNode" style="width: 30px; height: 20px; margin-left: 30px; margin-top: 13px; position: static; float: left;">
+									</div>
+									<pre style="float: left;">    </pre>
+									<span class="nodeSpan">人工活动</span>
+								</li>
+								<li class="list_li controler" style="cursor: move;">
+									<div id="freedom" href="javascript: void(0);" class="commNode" style="width: 30px; height: 20px; margin-left: 30px; margin-top: 13px;">
+									</div>
+									<span class="nodeSpan">自由活动</span>
+								</li>
+							</ul>
+						</dd>
+						<dt class="list_dt">
+				            <span class="_after"></span>
+				            <p>子流程</p>
+				            <i class="list_dt_icon"></i>
+        				</dt>
+						<dd class="list_dd">
+							<ul>
+								<li class="list_li controler" style="cursor: move;">
+									<div id="innerChildFlow" href="javascript: void(0);" class="innerChildFlowNode" style="width:30px; height: 20px; margin-left: 30px; margin-top: 13px; position: static; float: left;">
+									</div>
+									<pre style="float: left;">    </pre>
+									<span class="nodeSpan">内部子流程</span>
+								</li>
+								<li class="list_li controler" style="cursor: move;">
+									<div id="outerChildFlow" href="javascript: void(0);" class="outerChildFlowNode" style="width:30px; height: 20px; margin-left: 30px; margin-top: 13px;">
+									</div>
+									<span class="nodeSpan">外部子流程</span>
+								</li>
+							</ul>
+						</dd>
+						<dt class="list_dt">
+				            <span class="_after"></span>
+				            <p>泳道</p>
+				            <i class="list_dt_icon"></i>
+        				</dt>
+						<dd class="list_dd">
+							<ul>
+								<li class="list_li controler" style="cursor: move;">
+									<div id="broadwiseLane" href="javascript: void(0);" class="broadwiseLaneNode" style="width:30px; height: 20px; margin-left: 30px; margin-top: 13px; position: static; float: left;">
+									</div>
+									<pre style="float: left;">    </pre>
+									<span class="nodeSpan">横向泳道</span>
+								</li>
+								<li class="list_li controler" style="cursor: move;">
+									<div id="directionLane" href="javascript: void(0);" class="directionLaneNode" style="width:30px; height: 20px; margin-left: 30px; margin-top: 13px;">
+									</div>
+									<span class="nodeSpan">纵向泳道</span>
+								</li>
+							</ul>
+						</dd>
+					</dl>
+				</div>
+			</div>
+
+			<!-- 流程图绘制区域 -->
+			<div id="canvasId" class="layui-body canvasClass" style="top: 60px; left: 250px;">
+				<div id="Container"></div>
+			</div>
+			
+			<!-- 底部固定区域 -->
+			<div class="layui-footer" align="center" style="background-color: #eeeeee;">
+				<p>联科BPM流程绘制 V1.0</p>
+			</div>
+		</div>
+
+	</body>
+	
+	<!-- 注意Ready.js要放在最后面 -->
+	<script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="../js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="../js/jsplumb.min.js"></script>
+	<script type="text/javascript" src="../layui/layui.all.js"></script>
+	<script type="text/javascript" src="../js/web.contextmenu.js"></script>
+	<script type="text/javascript" src="../js/graphlib.min.js"></script>
+	<script type="text/javascript" src="../js/html2canvas.min.js"></script>
+	<script type="text/javascript" src="../js/canvg.js"></script>
+	<script type="text/javascript" src="../../ext/adapter/ext/ext-base.js"></script>
+	<script type="text/javascript" src="../../ext/ext-all.js"></script>
+	<script type="text/javascript" src="../../ext/wf/sharefunction.js"></script>
+	
+	<script type="text/javascript" src="../myjs/GlobalVar.js"></script>
+	<script type="text/javascript" src="../util/StringUtils.js"></script>
+	<script type="text/javascript" src="../util/GraphlibUtils.js"></script>
+	<script type="text/javascript" src="../util/LayuiUtils.js"></script>
+	<script type="text/javascript" src="../util/JsPlumbUtils.js"></script>
+	<script type="text/javascript" src="../myjs/MyLayui.js"></script>
+	<script type="text/javascript" src="../myjs/RightMenu.js"></script>
+	<script type="text/javascript" src="../myjs/MyFunction.js"></script>
+	<script type="text/javascript" src="../myjs/Ready.js"></script>
+
+	<script>
+		/**
+		 * 手风琴菜单效果
+		 */
+		$.each($('dd[class=list_dd]'), function() {
+			$(this).prev().attr("id", "open");
+			$(this).show();
+		});
+		$(".list_dt").on("click", function() {
+			if($(this).attr("id") == "open") {
+				$(this).removeAttr("id").next().hide();
+			} else {
+				$(this).attr("id", "open").next().show();
+			}
+		});
+	</script>
+
+</html>
