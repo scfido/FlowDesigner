@@ -4,8 +4,7 @@ var nodeMenuJson = [
 		name: "节点属性",
 		id: "nodeAttr",
 		callback: function(tempId) {
-			//editNodeAttribute(tempId);
-			editProperty(tempId);
+			editNodeAttribute(tempId);
 		}
 	},
 	{
@@ -35,15 +34,15 @@ var nodeMenuJson = [
 		callback: function(tempId) {
 			showConnectionRoute(tempId, 'behind');
 		}
-	}
-	/*{
+	},
+	{
 		name: "节点样式",
 		id: "nodeStyle",
 		callback: function(tempId) {
 			console.log("设置节点样式：" + tempId);
 			setNodeStyle(tempId);
 		}
-	}*/
+	}
 ];
 
 //连接线右击菜单
@@ -53,8 +52,7 @@ var connectionMenuJson = [
 		id: "connectionAttr",
 		callback: function(tempId) {
 			//编辑路由属性
-			editProperty(tempId);
-			//connectionAttr(tempId);
+			connectionAttr(tempId);
 		}
 	},
 	{
@@ -88,11 +86,11 @@ var laneMenuJson = [
 //画布右击菜单
 var canvasMenuJson = [
 	{
-		name: "过程属性",
+		name: "流程图属性",
 		id: "processAttribute",
 		callback: function(tempId) {
 			//编辑过程属性
-			editProperty('Process');
+			alert('编辑流程图属性');
 		}
 	},
 	{

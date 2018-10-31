@@ -50,7 +50,7 @@
 			if (text.length > 5) {
 				text = text.substring(0, 5) + '...';
 			}
-			parent.$(eleId).children(':first-child').text(text);
+			parent.$(getJquerySelectorPrefix(eleId)).children(':first-child').text(text);
 			
 			//关闭弹窗
 			closeLayerFrame();

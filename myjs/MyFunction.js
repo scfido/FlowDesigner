@@ -52,7 +52,7 @@ function createNewNode(nodeType, p) {
 	}
 	
 	//添加到画板中
-	$("#Container").append('<div id="' + newNode.newId + '" class="' + newNode.cla + '" ondblclick="editProperty(\'' + newNode.newId + '\')">' + 
+	$("#Container").append('<div id="' + newNode.newId + '" class="' + newNode.cla + '" ondblclick="editNodeAttribute(\'' + newNode.newId + '\')">' + 
 						       '<span>' + newNode.text + '</span>' + 
 						       newNode.icon + 
 						   '</div>'
@@ -318,14 +318,6 @@ function chooseNodeObjFromType(type, p) {
 }
 
 /**
- * 编辑节点属性
- */
-function editProperty(nodeId) {
-	var frameType = chooseOpenFrameType(getRemovePrefixId(nodeId));
-	SetProperty(getRemovePrefixId(nodeId), frameType);
-}
-
-/**
  * 根据节点类型选择打开的页面类型
  * @param {String} nodeId
  */
@@ -389,7 +381,7 @@ function initFlowCharts(o) {
 		if (t.length > 5) {
 			t = t.substring(0, 5) + '...';
 		}
-		$("#Container").append('<div id="' + nodeArr[i].key + '" class="' + nodeObj.cla + '" ondblclick="editProperty(\'' + nodeArr[i].key + '\')">' + 
+		$("#Container").append('<div id="' + nodeArr[i].key + '" class="' + nodeObj.cla + '" ondblclick="editNodeAttribute(\'' + nodeArr[i].key + '\')">' + 
 							   	    '<span>' + t + '</span>' + 
 							   	    nodeObj.icon + 
 							   	'</div>'
@@ -447,7 +439,7 @@ function initFlowCharts(o) {
 		
 		//设置连接线双击打开属性编辑窗口事件
 		$('#' + linkArr[i].routerId).dblclick(function(event) {
-			editProperty($(this).context.id);
+			alert('双击我做咩野？');
 		});
 		
 		//给路由添加文本信息
@@ -567,25 +559,15 @@ function save() {
 	//获取当前流程图对象
 	var obj = getCurrentFlowDoc();
 	
-	//缺省保存属性
-	saveAllDefaultNode();
-	
 	//将流程图对象json数据持久化到数据库中
-	var res = saveObj(obj);
+	//var res = saveObj(obj);
 	
-	if (res.Status == '1') {
-		//保存状态为已保存
-		$("#saveStatus").css('display', 'none');
-		layer.msg(CONFIG.msg.saveSuccess, {
-			icon: 1,
-			time: 1000
-		});
-	} else {
-		layer.msg(res.msg, {
-			icon: 2,
-			time: 1000
-		});
-	}
+	//保存状态为已保存
+	$("#saveStatus").css('display', 'none');
+	layer.msg(CONFIG.msg.saveSuccess, {
+		icon: 1,
+		time: 1000
+	});
 	
 	//注意：这里有返回值会导致火狐浏览器在点击保存后跳转页面
 	//return flowDoc;
@@ -754,10 +736,10 @@ function clear() {
 		UNDO_ARR.push(getCurrentFlowDoc());
 		
 		//删除数据库中的节点和路由数据
-		var deleteNodeAndRouterArr = [];
+		/*var deleteNodeAndRouterArr = [];
 		deleteNodeAndRouterArr = deleteNodeAndRouterArr.concat(graph.nodes());
 		deleteNodeAndRouterArr = deleteNodeAndRouterArr.concat(getAllRouterId());
-		deleteNodeFromDB(deleteNodeAndRouterArr);
+		deleteNodeFromDB(deleteNodeAndRouterArr);*/
 		
 		removeAll();
 		layer.close(index);
@@ -899,8 +881,8 @@ function undo() {
 		var newRouterArr = getAllRouterId();
 		
 		//删除撤销的数据库节点数据
-		var deleteNodeArr = getDeleteNodeArr(oldNodeArr, newNodeArr, oldRouterArr, newRouterArr);
-		deleteNodeFromDB(deleteNodeArr);
+		/*var deleteNodeArr = getDeleteNodeArr(oldNodeArr, newNodeArr, oldRouterArr, newRouterArr);
+		deleteNodeFromDB(deleteNodeArr);*/
 		
 		//撤销后保存缺省值
 		//saveAllDefaultNode();
@@ -927,8 +909,8 @@ function redo() {
 		var newRouterArr = getAllRouterId();
 		
 		//删除重做的数据库节点数据
-		var deleteNodeArr = getDeleteNodeArr(oldNodeArr, newNodeArr, oldRouterArr, newRouterArr);
-		deleteNodeFromDB(deleteNodeArr);
+		/*var deleteNodeArr = getDeleteNodeArr(oldNodeArr, newNodeArr, oldRouterArr, newRouterArr);
+		deleteNodeFromDB(deleteNodeArr);*/
 	}
 }
 
@@ -979,7 +961,7 @@ function deleteNode(tempId) {
 	}
 	
 	//删除数据库中的节点信息
-	deleteNodeFromDB(deleteNodeAndRouterIdArr);
+	//deleteNodeFromDB(deleteNodeAndRouterIdArr);
 	
 	layer.msg(CONFIG.msg.deleteNode, {
 		icon: 1,
@@ -1270,9 +1252,9 @@ function deleteConnection(connId) {
 		}
 		
 		//删除数据库中路由线的数据
-		var deleteRouter = [];
+		/*var deleteRouter = [];
 		deleteRouter.push(getRemovePrefixId(connId));
-		deleteNodeFromDB(deleteRouter);
+		deleteNodeFromDB(deleteRouter);*/
 		
 		//移除图对象中的线段
 		graph.removeEdge(sourceId, targetId);
@@ -1539,147 +1521,4 @@ function closeFrame() {
 	} else {
 		parent.window.close();
 	}
-}
-
-/**
- * 缺省保存
- */
-function saveAllDefaultNode() {
-	var sendDataArr = [];
-	var processId = parent.$('#mainDiv').attr('processid');
-	var s = projectName + 'rule?wf_num=R_S002_B011&Action=SaveAllDefaultNode&Processid=' + processId + '&Nodeid=';
-	
-	//拼接请求数据
-	var nodeArr = graph.nodes();
-	$.each(nodeArr, function(index) {
-		var nodeId = nodeArr[index];
-		var nodeType = graph.node(nodeArr[index]).nodeType;
-		if (nodeType == 'start') {
-			var d = s.concat(nodeId).concat('&NodeType=').concat('StartNode');
-			sendDataArr.push(d);
-		} else if (nodeType == 'end') {
-			var d = s.concat(nodeId).concat('&NodeType=').concat('EndNode');
-			sendDataArr.push(d);
-		}
-	});
-	var edgeArr = graph.edges();
-	$.each(edgeArr, function(index) {
-		var d = s.concat(graph.edge(edgeArr[index].v, edgeArr[index].w).id).concat('&NodeType=Router').concat('&StartNodeid=').concat(edgeArr[index].v).concat('&EndNodeid=').concat(edgeArr[index].w);
-		sendDataArr.push(d);
-	});
-	
-	//发送数据
-	$.each(sendDataArr, function(index) {
-		var conn = Ext.lib.Ajax.getConnectionObject().conn;
-		//console.log('发送请求：' + sendDataArr[index]);
-		conn.open('post', sendDataArr[index], false);
-		conn.send();
-		if (conn.status == '200') {
-			//console.log('缺省属性保存成功!');
-			//ShowErrorInfo("缺省属性保存成功!");
-		} else {
-			//console.log('缺省属性保存失败!');
-			//ShowErrorInfo("缺省属性保存失败!");
-		}
-	});
-}
-
-/**
- * 设置打开属性编辑子窗口的相关参数
- * @param {String} a 节点id
- * @param {String} b 类型
- */
-function SetProperty(a, b) {
-	var c = "";
-	var d = parent.$('#mainDiv').attr('processid');
-	var e = screen.availWidth;
-	var f = screen.availHeight;
-	var g = "960";
-	var h = "530";
-	var i = (e / 2 - 0) - g / 2;
-	var j = (f / 2 - 0) - h / 2;
-	if(b == "Activity") {
-		c = "userTask"
-	} else if(b == "AutoActivity") {
-		c = "businessRuleTask"
-	} else if(b == "Edge") {
-		c = "Gateway"
-	} else if(b == "EndNode") {
-		c = "endEvent"
-	} else if(b == "StartNode") {
-		c = "startEvent"
-	} else if(b == "Router") {
-		c = "sequenceFlow";
-		c += "&SourceNode=" + $('#' + a).attr('sourceid') + "&TargetNode=" + $('#' + a).attr('targetid');
-	} else if(b == "Process") {
-		c = "Process"
-	} else if(b == "Event") {
-		c = "Event"
-	} else if(b == "SubProcess") {
-		c = "subProcess"
-	} else if(b == "OutProcess") {
-		c = "outProcess"
-	}
-	var k = "";
-	if(b == "Process") {
-		k = "Process"
-	} else {
-		k = a;
-	}
-	var l = projectName + "rule?wf_num=R_S002_B002&Processid=" + d + "&Nodeid=" + k + "&ExtNodeType=" + c + "&WF_Appid=" + top.GetUrlArg("WF_Appid");
-	var m = 'dialogWidth:780px;dialogHeight:500px;dialogLeft:' + i + ';dialogTop:' + j + ';directories:no; localtion:no; menubar:no; status=no; toolbar=no;scrollbars:no;Resizeable=no;help:0;';
-	OpenUrl(l);
-}
-
-/**
- * 更新画布中节点的值
- * @param {String} nodeId 要更新的节点id
- * @param {String} text 节点的文本信息
- */
-function SetPropertyVal(nodeId, text) {
-	//保存状态为未保存
-	$("#saveStatus").css('display', '');
-	//将当前流程对象放入可撤销数组中
-	UNDO_ARR.push(getCurrentFlowDoc());
-	
-	text = text.trim();
-	var prefix = nodeId.substring(0, 1);
-	if (prefix != 'R') {
-		//更新图对象
-		graph.node(getRemovePrefixId(nodeId)).text = text;
-		graph.node(getRemovePrefixId(nodeId)).alreadySetName = true;
-		
-		//更新节点属性，若文本信息过长，则显示为省略形式
-		if (text.length > 5) {
-			text = text.substring(0, 5) + '...';
-		}
-		$(getJquerySelectorPrefix(nodeId)).children(':first-child').text(text);
-	} else {
-		//更新路由信息
-		setRouterLabel($(getJquerySelectorPrefix(nodeId)).attr('sourceid'), $(getJquerySelectorPrefix(nodeId)).attr('targetid'), text);
-	}
-}
-
-/**
- * 打开属性编辑子窗口
- * @param {String} a url
- * @param {String} b
- * @param {String} c
- */
-function OpenUrl(a, b, c) {
-	var d = screen.availWidth;
-	var e = screen.availHeight;
-	if(!b) b = 24;
-	if(!c) c = 80;
-	var f = d - b;
-	var g = e - c;
-	var h = (d / 2 - 0) - f / 2 - 5;
-	var i = (e / 2 - 0) - g / 2 - 25;
-	var d = screen.availWidth;
-	var e = screen.availHeight;
-	var f = "850";
-	var g = "500";
-	var h = (d / 2 - 0) - f / 2;
-	var i = (e / 2 - 0) - g / 2;
-	return window.open(a, '', 'Width=' + f + 'px,Height=' + g + 'px,Left=' + h + ',Top=' + i + ',location=no,menubar=no,status=yes,resizable=yes,scrollbars=auto,resezie=no')
 }

@@ -91,7 +91,7 @@ function initJsPlumbInstance() {
 			
 			//给连接线添加双击事件
 			$('#' + obj.c).dblclick(function(event) {
-				editProperty(obj.c);
+				alert("双击我做咩野？");
 			});
 		}
 	});

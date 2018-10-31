@@ -149,6 +149,7 @@
 				menu = doc.querySelector("#web-context-menu-" + index);
 			}
 			showMenu(event, menu);
+			// 单击隐藏菜单
 			doc.addEventListener("click", function(e) {
 				menu.style.display = "none";
 			});
