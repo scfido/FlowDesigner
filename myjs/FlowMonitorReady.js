@@ -1,3 +1,7 @@
+/**
+ * 流程监控JS文件
+ */
+
 var isIE = isIE();
 var initColor = '#ccab26';
 var animateColor = '#ff0000';

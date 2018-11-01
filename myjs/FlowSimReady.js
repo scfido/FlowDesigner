@@ -1,3 +1,7 @@
+/**
+ * 流程仿真JS文件
+ */
+
 var isIE = isIE();
 var PauseDocUnid = "";
 var SimProcessUnid = GetUrlArg("SimProcessUnid");

@@ -1,3 +1,7 @@
+/**
+ * 查看流程图JS文件
+ */
+
 var isIE = isIE();
 var initColor = '#ccab26';
 var animateColor = '#ff0000';

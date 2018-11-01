@@ -238,6 +238,7 @@ jsPlumb.ready(function() {
 		//isTarget: true
 	}
 	
+	//注册画布的右键菜单事件
 	window.ContextMenu.bind("#canvasId", canvasMenuJson);
 
 	//拖拽
@@ -524,6 +525,9 @@ jsPlumb.ready(function() {
 	 */
 	initFlowCharts(demoData);
 	
+	/**
+	 * 初始化流程图时默认选择鼠标工具
+	 */
 	mouseTool();
 	
 	console.log('init success......');
